@@ -16,7 +16,7 @@
     <h3 id="about">About</h3>
     <article>
         <p>
-            This repository holds all the content that I have on my personal website, showcasing more about me that may not be available on LinkedIn or other platforms.
+            To do at a later date.
         </p>
         <p>
             <a href="#readme-top">Back to top</a>
