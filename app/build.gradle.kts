@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -40,6 +41,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.firebase.storage)
     implementation(libs.material)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
