@@ -1,4 +1,10 @@
 package com.jacobdgraham.myschedule.data.local
 
-class ShiftEntity {
-}
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName="shifts")
+data class ShiftEntity(
+    @PrimaryKey val date: String,
+    val shiftCode: String
+)
