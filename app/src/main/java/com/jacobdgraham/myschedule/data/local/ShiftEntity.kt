@@ -12,7 +12,15 @@ import androidx.room.PrimaryKey
  *
  * @property shiftCode the code representing the type of shift worked on this date. This date will be formatted in 24-hour format, where the first two digits
  * represent the starting shift hour, and the last two digits represent the length of the shift. For example, 2010 represents a shift that starts at 8:00 p.m.
- * and ends at 6:00 a.m.
+ * and lasts 10 hours
+ *
+ * Examples:
+ *
+ * ```
+ * date = "2026-05-01", shiftCode = "2010"
+ * date = "2026-05-02", shiftCode = "1510"
+ * date = "2026-05-03", shiftCode = "0610"
+ * ```
  */
 @Entity(tableName="shifts")
 data class ShiftEntity(
