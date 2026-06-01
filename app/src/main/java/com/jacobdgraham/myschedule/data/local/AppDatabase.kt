@@ -13,5 +13,5 @@ import androidx.room.RoomDatabase
 )
 
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun shiftDao(): ShiftDao
+    abstract fun shiftDao(): IShiftDao
 }

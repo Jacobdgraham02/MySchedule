@@ -1,4 +1,41 @@
 package com.jacobdgraham.myschedule.data.repository
 
-class ShiftRepository {
+import com.jacobdgraham.myschedule.data.local.IShiftDao
+import com.jacobdgraham.myschedule.data.local.ShiftEntity
+import com.jacobdgraham.myschedule.data.repository.interfaces.IShiftRepository
+
+/**
+ * Provides functions that translate data retrieved from firebase into usable [ShiftEntity] objects
+ * @param shiftDao depending on which function is called, a different SQL query will be used (defined in [IShiftDao])
+ *      - Example: The below SQL query will be executed when the function [getShiftsForMonth] is called from this repository
+ *      ```
+ *      @Query("SELECT * FROM shifts WHERE date LIKE :monthPrefix || '%' ORDER BY date ASC")
+ *      ```
+ *
+ */
+class ShiftRepository(private val shiftDao: IShiftDao): IShiftRepository {
+    /**
+     * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
+     * @return List of [ShiftEntity], where each entity shows the current shift for that day and the shift worked that day
+     */
+    override suspend fun getShiftsForMonth(monthPrefix: String): List<ShiftEntity> {
+        return shiftDao.getShiftsForMonth(monthPrefix)
+    }
+
+    /**
+     * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
+     * @param shifts a list of [ShiftEntity], where each entity has a key value of year and month in xxxx-xx format, and value in the form of shift time xxxx.
+     * For example, 2110 to represent start time of 9 pm and 10 hours long
+     */
+    override suspend fun saveShiftsForMonth(monthPrefix: String, shifts: List<ShiftEntity>) {
+        shiftDao.deleteShiftsForMonth(monthPrefix)
+        shiftDao.upsertShifts(shifts)
+    }
+
+    /**
+     * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
+     */
+    override suspend fun deleteShiftsForMonth(monthPrefix: String) {
+        shiftDao.deleteShiftsForMonth(monthPrefix)
+    }
 }

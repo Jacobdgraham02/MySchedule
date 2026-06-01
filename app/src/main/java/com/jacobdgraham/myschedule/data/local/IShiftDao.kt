@@ -20,7 +20,7 @@ import androidx.room.Query
  * - [deleteShiftsForMonth]   deletes all shifts for a given month
  */
 @Dao
-interface ShiftDao {
+interface IShiftDao {
     @Query("SELECT * FROM shifts WHERE date LIKE :monthPrefix || '%' ORDER BY date ASC")
     suspend fun getShiftsForMonth(monthPrefix: String): List<ShiftEntity>
 
