@@ -9,13 +9,16 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.jacobdgraham.myschedule.ui.components.CalendarGrid
 import com.jacobdgraham.myschedule.ui.components.FooterBar
 import com.jacobdgraham.myschedule.ui.components.ShiftLegend
+import com.jacobdgraham.myschedule.ui.preview.createFakeJuneSchedule
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
+import java.time.YearMonth
 
 /**
  * Main screen for displaying when application is launched for the monthly shift calendar display
@@ -79,6 +82,32 @@ fun CalendarScreen(uiState: CalendarUiState, onPreviousMonth: () -> Unit, onToda
         )
     }
 }
+
+/**
+ * Temporary test version of the calendar screen.
+ *
+ * This is useful before the real ViewModel, Room database, or Firestore data
+ * source is connected.
+ */
+@Composable
+fun TestCalendarScreen() {
+    val fakeSchedule = remember {
+        createFakeJuneSchedule()
+    }
+
+    CalendarScreen(
+        uiState = CalendarUiState(
+            selectedMonth = YearMonth.of(2026, 6),
+            monthSchedule = fakeSchedule,
+            isLoading = false,
+            errorMessage = null
+        ),
+        onPreviousMonth = { },
+        onToday = { },
+        onNextMonth = { }
+    )
+}
+
 
 /**
  * Helper function to format the calendar title in the header of the screen to look user friendly

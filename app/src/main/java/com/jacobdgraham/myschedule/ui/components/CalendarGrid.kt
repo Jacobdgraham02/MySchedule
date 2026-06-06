@@ -1,6 +1,9 @@
 package com.jacobdgraham.myschedule.ui.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -10,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.jacobdgraham.myschedule.domain.model.MonthSchedule
 import java.time.DayOfWeek
@@ -58,7 +62,21 @@ fun CalendarGrid(monthSchedule: MonthSchedule, modifier: Modifier = Modifier) {
     }
 
     Column(modifier = modifier.fillMaxWidth()) {
+        WeekdayHeader()
 
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(7),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            items(calendarCells) {
+                shiftDay ->
+                if (shiftDay == null) {
+                    EmptyCalendarCell()
+                } else {
+                    CalendarDayCell(shiftDay = shiftDay)
+                }
+            }
+        }
     }
 }
 
@@ -78,8 +96,8 @@ private fun WeekdayHeader() {
  * Helper function that lays out the display for any empty calendar cell (one which does have any shift data, and only day number)
  */
 @Composable
-private fun EmptyCalenderCell() {
-    androidx.compose.foundation.layout.Box(
+private fun EmptyCalendarCell() {
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 48.dp)

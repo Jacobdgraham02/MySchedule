@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.jacobdgraham.myschedule.ui.screen.CalendarScreen
+import com.jacobdgraham.myschedule.ui.screen.TestCalendarScreen
 import com.jacobdgraham.myschedule.ui.theme.MyScheduleTheme
 
 class MainActivity: ComponentActivity() {
@@ -12,7 +13,7 @@ class MainActivity: ComponentActivity() {
 
         setContent {
             MyScheduleTheme {
-                CalendarScreen()
+                TestCalendarScreen()
             }
         }
     }
