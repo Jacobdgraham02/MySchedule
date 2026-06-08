@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.jacobdgraham.myschedule.domain.model.ShiftDay
+import com.jacobdgraham.myschedule.ui.theme.CalendarCellBackground
 import com.jacobdgraham.myschedule.ui.theme.getShiftCodeColour
 
 /**
@@ -37,7 +38,7 @@ fun CalendarDayCell(shiftDay: ShiftDay, modifier: Modifier = Modifier) {
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outlineVariant
             )
-            .background(MaterialTheme.colorScheme.surface)
+            .background(CalendarCellBackground)
             .padding(4.dp),
         contentAlignment = Alignment.Center
     ) {

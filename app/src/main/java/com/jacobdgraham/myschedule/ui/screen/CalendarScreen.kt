@@ -1,5 +1,6 @@
 package com.jacobdgraham.myschedule.ui.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import com.jacobdgraham.myschedule.ui.components.FooterBar
 import com.jacobdgraham.myschedule.ui.components.ShiftLegend
 import com.jacobdgraham.myschedule.ui.preview.createFakeJuneSchedule
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
+import com.jacobdgraham.myschedule.ui.theme.SoftLightGrayBackground
 import java.time.Month
 import java.time.YearMonth
 
@@ -40,7 +42,8 @@ import java.time.YearMonth
 fun CalendarScreen(uiState: CalendarUiState, onPreviousMonth: () -> Unit, onToday: () -> Unit, onNextMonth: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(SoftLightGrayBackground),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
