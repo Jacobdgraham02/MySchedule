@@ -3,8 +3,10 @@ package com.jacobdgraham.myschedule.ui.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,6 +20,7 @@ import com.jacobdgraham.myschedule.ui.components.FooterBar
 import com.jacobdgraham.myschedule.ui.components.ShiftLegend
 import com.jacobdgraham.myschedule.ui.preview.createFakeJuneSchedule
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
+import java.time.Month
 import java.time.YearMonth
 
 /**
@@ -37,16 +40,21 @@ import java.time.YearMonth
 fun CalendarScreen(uiState: CalendarUiState, onPreviousMonth: () -> Unit, onToday: () -> Unit, onNextMonth: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .padding(12.dp),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = formatMonthTitle(uiState),
-            modifier = Modifier.weight(1f)
-        )
+
+        Spacer(modifier = Modifier.height(28.dp))
+
+        ShiftLegend(modifier = Modifier.fillMaxWidth())
+
         Spacer(modifier = Modifier.height(8.dp))
-        ShiftLegend()
+
+        Text(
+            text = formatMonthTitle(uiState.selectedMonth),
+            style = MaterialTheme.typography.titleMedium
+        )
+
         Spacer(modifier = Modifier.height(8.dp))
 
         when {
@@ -63,7 +71,9 @@ fun CalendarScreen(uiState: CalendarUiState, onPreviousMonth: () -> Unit, onToda
             uiState.monthSchedule != null -> {
                 CalendarGrid(
                     monthSchedule = uiState.monthSchedule,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
                 )
             }
 
@@ -75,10 +85,13 @@ fun CalendarScreen(uiState: CalendarUiState, onPreviousMonth: () -> Unit, onToda
             }
         }
 
+        Spacer(modifier = Modifier.height(12.dp))
+
         FooterBar(
             onPreviousMonth = onPreviousMonth,
             onToday = onToday,
-            onNextMonth = onNextMonth
+            onNextMonth = onNextMonth,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -99,8 +112,6 @@ fun TestCalendarScreen() {
         uiState = CalendarUiState(
             selectedMonth = YearMonth.of(2026, 6),
             monthSchedule = fakeSchedule,
-            isLoading = false,
-            errorMessage = null
         ),
         onPreviousMonth = { },
         onToday = { },
@@ -112,11 +123,10 @@ fun TestCalendarScreen() {
 /**
  * Helper function to format the calendar title in the header of the screen to look user friendly
  */
-private fun formatMonthTitle(uiState: CalendarUiState): String {
-    val month = uiState.selectedMonth.month.name
+private fun formatMonthTitle(yearMonth: YearMonth): String {
+    val monthName = yearMonth.month.name
         .lowercase()
-        .replaceFirstChar { it.uppercase() }
+        .replaceFirstChar {it.uppercase()}
 
-    val year = uiState.selectedMonth.year
-    return "$month $year"
+    return "$monthName ${yearMonth.year}"
 }

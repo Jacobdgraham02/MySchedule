@@ -1,6 +1,7 @@
 package com.jacobdgraham.myschedule.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,8 +9,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.room.util.TableInfo
 
 /**
  * Displays navigation actions at the bottom of the schedule screen
@@ -23,17 +26,17 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 fun FooterBar(onPreviousMonth: () -> Unit, onToday: () -> Unit, onNextMonth: () -> Unit, modifier: Modifier = Modifier) {
-    Row(modifier = modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+    Column(modifier = modifier.fillMaxWidth().padding(horizontal = 28.dp, vertical = 4.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         OutlinedButton(onClick = onPreviousMonth) {
-            Text(text = "Previous")
+            Text(text = "Previous month")
         }
 
         Button(onClick = onToday) {
-            Text(text = "Today")
+            Text(text = "Current month")
         }
 
         OutlinedButton(onClick = onNextMonth) {
-            Text(text = "Next")
+            Text(text = "Next month")
         }
     }
 }

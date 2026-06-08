@@ -82,12 +82,28 @@ fun CalendarGrid(monthSchedule: MonthSchedule, modifier: Modifier = Modifier) {
 
 /**
  * Helper function that lays out a header at the top of calendar which shows the days of the week
- */
+// */
+//@Composable
+//private fun WeekdayHeader() {
+//    LazyVerticalGrid(columns = GridCells.Fixed(7), modifier = Modifier.heightIn(max = 40.dp)) {
+//        items(listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")) {
+//            dayName -> Text (text = dayName, style= MaterialTheme.typography.labelMedium)
+//        }
+//    }
+//}
+
 @Composable
 private fun WeekdayHeader() {
-    LazyVerticalGrid(columns = GridCells.Fixed(7), modifier = Modifier.heightIn(max = 40.dp)) {
-        items(listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")) {
-            dayName -> Text (text = dayName, style= MaterialTheme.typography.labelMedium)
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat").forEach { dayName ->
+            Text(
+                text = dayName,
+                style = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }

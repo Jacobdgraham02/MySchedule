@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.jacobdgraham.myschedule.domain.model.ShiftDay
+import com.jacobdgraham.myschedule.ui.theme.getShiftCodeColour
 
 /**
  * Represents the look of a single cell in the calendar grid
@@ -54,7 +55,7 @@ fun CalendarDayCell(shiftDay: ShiftDay, modifier: Modifier = Modifier) {
                 Text (
                     text = shiftDay.shiftCode,
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.primary
+                    color = getShiftCodeColour(shiftDay.shiftCode)
                 )
             }
         }
