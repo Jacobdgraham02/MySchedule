@@ -1,38 +1,24 @@
 package com.jacobdgraham.myschedule.ui.screen
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
+import android.content.res.Configuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
-import com.jacobdgraham.myschedule.ui.components.CalendarGrid
-import com.jacobdgraham.myschedule.ui.components.FooterBar
+import androidx.compose.ui.platform.LocalConfiguration
 import com.jacobdgraham.myschedule.ui.components.MonthSelectorDialog
-import com.jacobdgraham.myschedule.ui.components.ShiftLegend
 import com.jacobdgraham.myschedule.ui.preview.createFakeMonthSchedule
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
-import com.jacobdgraham.myschedule.ui.theme.SoftLightGrayBackground
 import java.time.YearMonth
 
 /**
  * Main screen for displaying when application is launched for the monthly shift calendar display
  *
- * [CalendarScreen] displays the selected month, the shift legend, main calendar grid space, and footer (empty space currently)
+ * [CalendarScreen] displays the selected month, the shift legend, main calendar grid space, and footer (empty space currently). Reacts dynamically to
+ * portrait or landscape orientation of screen
  *
  * Receives [CalendarUiState], which is a data class itself, and callback functions from a ViewModel or parent composable
  *
@@ -46,75 +32,39 @@ fun CalendarScreen(uiState: CalendarUiState, onMonthSelected: (YearMonth) -> Uni
         mutableStateOf(false)
     }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(SoftLightGrayBackground),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    val screenOrientation = LocalConfiguration.current
 
-        Spacer(modifier = Modifier.height(28.dp))
+    val isPortrait = screenOrientation.orientation == Configuration.ORIENTATION_PORTRAIT
 
-        ShiftLegend(modifier = Modifier.fillMaxWidth())
+    Text(text = "The variable value is: $isPortrait")
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = formatMonthTitle(uiState.selectedMonth),
-            style = MaterialTheme.typography.titleMedium,
-            textDecoration = TextDecoration.Underline,
-            modifier = Modifier.clickable {
+    if (isPortrait) {
+        PortraitCalendarLayout(
+            uiState = uiState,
+            onMonthTitleClicked = {
                 isMonthSelectorOpen = true
-            }
+            },
+            modifier = modifier
         )
+    } else {
+        LandscapeCalendarLayout(
+            uiState = uiState,
+            onMonthTitleClicked = {
+                isMonthSelectorOpen = true
+            },
+            modifier = Modifier
+        )
+    }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        when {
-            uiState.isLoading -> {
-                CircularProgressIndicator()
+    if (isMonthSelectorOpen) {
+        MonthSelectorDialog(
+            currentlySelectedMonth = uiState.selectedMonth,
+            onMonthSelected = { selectedMonth ->
+                isMonthSelectorOpen = false
+                onMonthSelected(selectedMonth) },
+            onDismiss = {
+                isMonthSelectorOpen = false
             }
-            uiState.errorMessage != null -> {
-                Text(
-                    text = uiState.errorMessage,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-            uiState.monthSchedule != null -> {
-                CalendarGrid(
-                    monthSchedule = uiState.monthSchedule,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                )
-            }
-
-            else -> {
-                Text(
-                    text = "No schedule availability for this month",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        }
-
-        if (isMonthSelectorOpen) {
-            MonthSelectorDialog(
-                currentlySelectedMonth = uiState.selectedMonth,
-                onMonthSelected = { selectedMonth ->
-                    isMonthSelectorOpen = false
-                    onMonthSelected(selectedMonth)
-                },
-                onDismiss = {
-                    isMonthSelectorOpen = false
-                }
-            )
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        FooterBar(
-            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -152,7 +102,7 @@ fun TestCalendarScreen() {
 /**
  * Helper function to format the calendar title in the header of the screen to look user friendly
  */
-private fun formatMonthTitle(yearMonth: YearMonth): String {
+fun formatMonthTitle(yearMonth: YearMonth): String {
     val monthName = yearMonth.month.name
         .lowercase()
         .replaceFirstChar {it.uppercase()}
