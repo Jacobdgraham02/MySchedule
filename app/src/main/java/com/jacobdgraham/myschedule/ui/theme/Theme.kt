@@ -35,5 +35,4 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun MyScheduleTheme(content: @Composable () -> Unit) {
     MaterialTheme(content = content)
-
 }

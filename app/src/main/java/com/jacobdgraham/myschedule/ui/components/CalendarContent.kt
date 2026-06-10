@@ -7,7 +7,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
+import com.jacobdgraham.myschedule.R
 
 /**
  * Reusable function that displays one of a few things:
@@ -49,7 +51,7 @@ fun CalendarContent (
 
         else -> {
             Text(
-                text = "No schedule availability for this month",
+                text = stringResource(R.string.no_schedule_availability),
                 style = MaterialTheme.typography.bodyMedium
             )
         }

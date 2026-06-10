@@ -73,13 +73,6 @@ fun LandscapeCalendarLayout(
             FooterBar(
                 modifier = Modifier.fillMaxWidth()
             )
-
-//            VerticalScrollIndicator(
-//                scrollState = scrollState,
-//                modifier = Modifier
-//                    .align(Alignment.End)
-//                    .padding(end = 4.dp)
-//            )
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.jacobdgraham.myschedule.ui.screen
 
 import android.content.res.Configuration
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,8 +34,6 @@ fun CalendarScreen(uiState: CalendarUiState, onMonthSelected: (YearMonth) -> Uni
     val screenOrientation = LocalConfiguration.current
 
     val isPortrait = screenOrientation.orientation == Configuration.ORIENTATION_PORTRAIT
-
-    Text(text = "The variable value is: $isPortrait")
 
     if (isPortrait) {
         PortraitCalendarLayout(

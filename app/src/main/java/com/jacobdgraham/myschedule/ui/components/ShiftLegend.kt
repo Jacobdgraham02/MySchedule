@@ -2,7 +2,6 @@ package com.jacobdgraham.myschedule.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import com.jacobdgraham.myschedule.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.jacobdgraham.myschedule.ui.theme.getShiftCodeColour
@@ -40,15 +41,15 @@ fun ShiftLegend(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Shift Legend",
+            text = stringResource(R.string.shift_legend_title),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
-        LegendItem(shiftCode = "0610", description = "6:00 a.m. to 4:00 p.m.")
+        LegendItem(shiftCode = stringResource(R.string.shift_code_0610), description = stringResource(R.string.shift_code_0610_description))
 
-        LegendItem(shiftCode = "1510", description = "3:00 p.m. to 1:00 a.m.")
+        LegendItem(shiftCode = stringResource(R.string.shift_code_1510), description = stringResource(R.string.shift_code_1510_description))
 
-        LegendItem(shiftCode = "2110", description= "9:00 p.m. to 6:00 a.m.")
+        LegendItem(shiftCode = stringResource(R.string.shift_code_2010), description= stringResource(R.string.shift_code_2010_description))
     }
 }
 

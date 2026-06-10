@@ -25,6 +25,8 @@ import java.time.Month
 import java.time.YearMonth
 import java.time.format.TextStyle
 import androidx.compose.ui.platform.LocalLocale
+import androidx.compose.ui.res.stringResource
+import com.jacobdgraham.myschedule.R
 
 /**
  * Dialog that allows the user to select a given month and year. This component is used when the user selects the calendar title, which is underlined as:
@@ -61,7 +63,7 @@ fun MonthSelectorDialog(currentlySelectedMonth: YearMonth, onMonthSelected: (Yea
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(text = "Select Month")
+            Text(text = stringResource(R.string.month_selector_dialog_choose_month_prompt))
         },
         text = {
             Column {
@@ -131,14 +133,14 @@ fun MonthSelectorDialog(currentlySelectedMonth: YearMonth, onMonthSelected: (Yea
                     )
                 }
             ) {
-                Text(text = "Select")
+                Text(text = stringResource(R.string.month_selector_dialog_select))
             }
         },
         dismissButton = {
             TextButton(
                 onClick = onDismiss
             ) {
-                Text(text = "Cancel")
+                Text(text = stringResource(R.string.month_selector_dialog_cancel))
             }
         }
     )
