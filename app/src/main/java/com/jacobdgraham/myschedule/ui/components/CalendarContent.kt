@@ -9,6 +9,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
 
+/**
+ * Reusable function that displays one of a few things:
+ * ```
+ * 1. If the calendar ui is currently loading, there is a circular loading progress indicator on the screen to indicate that.
+ * 2. If there is some sort of error when trying to display the calendar, an error message is shown where the calendar should be
+ * 3. If there are no errors and the ui loads successfully, it will be displayed
+ * 4. If none of the options above happen, there will be a text message replacing the calendar which informs the user that there is no schedule availability
+ * for this month
+ */
 @Composable
 fun CalendarContent (
     uiState: CalendarUiState,

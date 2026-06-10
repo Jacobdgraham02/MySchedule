@@ -17,6 +17,14 @@ import com.jacobdgraham.myschedule.ui.components.ShiftLegend
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
 import com.jacobdgraham.myschedule.ui.theme.SoftLightGrayBackground
 
+/**
+ * This layout is used when the user orients the phone in portrait orientation. Unlike [LandscapeCalendarLayout], a vertical scrollbar is not added to this page
+ * and it is locked in place
+ *
+ * @param uiState the state of the calendar as it is rendered on the page
+ * @param onMonthTitleClicked callback function executed when a new month is selected. This updates state with new data
+ * @param modifier optional layout modifier
+ */
 @Composable
 fun PortraitCalendarLayout(
     uiState: CalendarUiState,

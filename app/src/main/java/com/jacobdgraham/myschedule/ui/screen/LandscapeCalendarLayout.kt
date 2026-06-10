@@ -1,11 +1,15 @@
 package com.jacobdgraham.myschedule.ui.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,72 +21,65 @@ import com.jacobdgraham.myschedule.ui.components.ShiftLegend
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
 import com.jacobdgraham.myschedule.ui.theme.SoftLightGrayBackground
 
+/**
+ * This layout is used when the user orients the phone in landscape orientation. This adds a vertical scrollbar to the screen that is invisible
+ * and locks the calendar so the user does not accidentally try and scroll on the calendar, and instead scrolls the entire page instead
+ *
+ * @param uiState the state of the calendar as it is rendered on the page
+ * @param onMonthTitleClicked callback function executed when a new month is selected. This updates state with new data
+ * @param modifier optional layout modifier
+ */
 @Composable
 fun LandscapeCalendarLayout(
     uiState: CalendarUiState,
     onMonthTitleClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
+    val scrollState = rememberScrollState()
+
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .background(SoftLightGrayBackground),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(SoftLightGrayBackground)
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
 
-        ShiftLegend(
-            modifier = Modifier.fillMaxWidth()
-        )
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(40.dp))
 
-        Spacer(modifier = Modifier.height(40.dp))
+            ShiftLegend(
+                modifier = Modifier.fillMaxWidth()
+            )
 
-        MonthTitle(
-            selectedMonth = uiState.selectedMonth,
-            onClick = onMonthTitleClicked
-        )
+            Spacer(modifier = Modifier.height(40.dp))
 
-        CalendarContent(
-            uiState = uiState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        )
+            MonthTitle(
+                selectedMonth = uiState.selectedMonth,
+                onClick = onMonthTitleClicked
+            )
 
-        FooterBar(
-            modifier = Modifier.fillMaxWidth()
-        )
+            CalendarContent(
+                uiState = uiState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(360.dp)
+            )
+
+            FooterBar(
+                modifier = Modifier.fillMaxWidth()
+            )
+
+//            VerticalScrollIndicator(
+//                scrollState = scrollState,
+//                modifier = Modifier
+//                    .align(Alignment.End)
+//                    .padding(end = 4.dp)
+//            )
+        }
     }
-//    Row(
-//        modifier = modifier
-//            .fillMaxSize()
-//            .background(SoftLightGrayBackground),
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Column(
-//            modifier = Modifier
-//                .width(220.dp)
-//                .padding(horizontal = 12.dp),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center
-//        ) {
-//            ShiftLegend(
-//                modifier = Modifier.fillMaxWidth()
-//            )
-//
-//            Spacer(modifier = Modifier.height(20.dp))
-//
-//            MonthTitle(
-//                selectedMonth = uiState.selectedMonth,
-//                onClick = onMonthTitleClicked
-//            )
-//        }
-//
-//        CalendarContent(
-//            uiState = uiState,
-//            modifier = Modifier
-//                .weight(1f)
-//                .padding(end = 12.dp)
-//        )
-//    }
 }
