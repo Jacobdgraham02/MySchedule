@@ -7,6 +7,7 @@
     <article>
         <ol>
             <li><a href="#about" title="To do at a later date">To do at a later date</a></li>
+            <li><a href="#credits" title="Credits to give to assets that I used">Credits</a></li>
         </ol>
     </article>
 </section>
@@ -20,6 +21,17 @@
         </p>
         <p>
             <a href="#readme-top">Back to top</a>
+        </p>
+    </article>
+</section>
+
+<section>
+    <!-- CREDITS SECTION -->
+    <h3 id="credits">Credits</h3>
+    <article>
+        <p>
+            App images were obtained from: https://thepayrolledge.com/blog/2019-provincial-holiday-schedule-in-canada/
+            No modifications were made to the image.
         </p>
     </article>
 </section>
