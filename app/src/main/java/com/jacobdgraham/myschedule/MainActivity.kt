@@ -14,8 +14,6 @@ import com.jacobdgraham.myschedule.data.local.AppDatabase
 import com.jacobdgraham.myschedule.data.remote.FirestoreShiftDataSource
 import com.jacobdgraham.myschedule.data.repository.ShiftRepository
 import com.jacobdgraham.myschedule.ui.screen.CalendarRoute
-import com.jacobdgraham.myschedule.ui.screen.CalendarScreen
-import com.jacobdgraham.myschedule.ui.screen.TestCalendarScreen
 import com.jacobdgraham.myschedule.ui.theme.MyScheduleTheme
 import com.jacobdgraham.myschedule.viewmodel.CalendarViewModel
 import com.jacobdgraham.myschedule.viewmodel.CalendarViewModelFactory

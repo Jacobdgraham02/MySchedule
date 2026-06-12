@@ -23,7 +23,6 @@ class ShiftRepository(private val shiftDao: IShiftDao, private val firestoreShif
      * @return List of [ShiftEntity], where each entity shows the current shift for that day and the shift worked that day
      */
     override suspend fun getShiftsForMonth(yearMonth: YearMonth): List<ShiftEntity> {
-        // return shiftDao.getShiftsForMonth(monthPrefix)
         val monthPrefix = yearMonth.toString()
 
         val cachedShifts = shiftDao.getShiftsForMonth(monthPrefix)
@@ -48,15 +47,15 @@ class ShiftRepository(private val shiftDao: IShiftDao, private val firestoreShif
      * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
      * @param shifts a list of [ShiftEntity], where each entity has a key value of year and month in xxxx-xx format, and value in the form of shift time xxxx.
      * For example, 2110 to represent start time of 9 pm and 10 hours long
-     */
+     **/
     override suspend fun saveShiftsForMonth(monthPrefix: String, shifts: List<ShiftEntity>) {
         shiftDao.deleteShiftsForMonth(monthPrefix)
         shiftDao.upsertShifts(shifts)
     }
-//
-//    /**
-//     * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
-//     */
+
+    /**
+     * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
+     */
     override suspend fun deleteShiftsForMonth(monthPrefix: String) {
         shiftDao.deleteShiftsForMonth(monthPrefix)
     }

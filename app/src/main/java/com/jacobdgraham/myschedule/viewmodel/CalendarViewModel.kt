@@ -33,7 +33,7 @@ class CalendarViewModel(private val shiftRepository: ShiftRepository): ViewModel
     }
 
 
-     fun loadMonth(yearMonth: YearMonth) {
+    fun loadMonth(yearMonth: YearMonth) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(
                 selectedMonth = yearMonth,
