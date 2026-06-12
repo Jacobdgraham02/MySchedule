@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
  * Declaration for local Room database which defines which entities exist in the database and which DAOs are available
  */
 @Database(
-    entities =[ShiftEntity::class],
+    entities = [ShiftEntity::class],
     version =1,
     exportSchema = false
 )

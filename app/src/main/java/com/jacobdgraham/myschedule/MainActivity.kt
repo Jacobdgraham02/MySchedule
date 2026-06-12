@@ -8,7 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.room.Room
 import com.google.firebase.firestore.FirebaseFirestore
+import com.jacobdgraham.myschedule.data.local.AppDatabase
 import com.jacobdgraham.myschedule.data.remote.FirestoreShiftDataSource
 import com.jacobdgraham.myschedule.data.repository.ShiftRepository
 import com.jacobdgraham.myschedule.ui.screen.CalendarRoute
@@ -22,11 +24,19 @@ class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val database = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "myschedule_database"
+        ).build()
+
+        val shiftDao = database.shiftDao()
+
         val firestore = FirebaseFirestore.getInstance()
 
         val firestoreShiftDataSource = FirestoreShiftDataSource(firestore = firestore)
 
-        val shiftRepository = ShiftRepository(firestoreShiftDataSource = firestoreShiftDataSource)
+        val shiftRepository = ShiftRepository(shiftDao = shiftDao, firestoreShiftDataSource = firestoreShiftDataSource)
 
         val calendarViewModelFactory = CalendarViewModelFactory(
             shiftRepository = shiftRepository

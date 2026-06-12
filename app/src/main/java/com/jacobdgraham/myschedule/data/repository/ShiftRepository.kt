@@ -1,5 +1,6 @@
 package com.jacobdgraham.myschedule.data.repository
 
+import android.util.Log
 import com.jacobdgraham.myschedule.data.local.IShiftDao
 import com.jacobdgraham.myschedule.data.local.ShiftEntity
 import com.jacobdgraham.myschedule.data.remote.FirestoreShiftDataSource
@@ -15,14 +16,32 @@ import java.time.YearMonth
  *      ```
  *
  */
-class ShiftRepository(private val firestoreShiftDataSource: FirestoreShiftDataSource): IShiftRepository {
+class ShiftRepository(private val shiftDao: IShiftDao, private val firestoreShiftDataSource: FirestoreShiftDataSource): IShiftRepository {
+    private val logcatTag: String = "ShiftRepository"
     /**
      * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
      * @return List of [ShiftEntity], where each entity shows the current shift for that day and the shift worked that day
      */
     override suspend fun getShiftsForMonth(yearMonth: YearMonth): List<ShiftEntity> {
         // return shiftDao.getShiftsForMonth(monthPrefix)
-        return firestoreShiftDataSource.getShiftsForMonth(yearMonth)
+        val monthPrefix = yearMonth.toString()
+
+        val cachedShifts = shiftDao.getShiftsForMonth(monthPrefix)
+
+        return try {
+            val remoteShifts =  firestoreShiftDataSource.getShiftsForMonth(yearMonth)
+            shiftDao.deleteShiftsForMonth(monthPrefix)
+            shiftDao.upsertShifts(remoteShifts)
+
+            remoteShifts
+        } catch (exception: Exception) {
+            Log.e(
+                logcatTag,
+                "Failed to refresh shifts from Firestore for $yearMonth, using cached Room data",
+                exception
+            )
+            cachedShifts
+        }
     }
 
     /**
@@ -30,15 +49,15 @@ class ShiftRepository(private val firestoreShiftDataSource: FirestoreShiftDataSo
      * @param shifts a list of [ShiftEntity], where each entity has a key value of year and month in xxxx-xx format, and value in the form of shift time xxxx.
      * For example, 2110 to represent start time of 9 pm and 10 hours long
      */
-//    override suspend fun saveShiftsForMonth(monthPrefix: String, shifts: List<ShiftEntity>) {
-//        shiftDao.deleteShiftsForMonth(monthPrefix)
-//        shiftDao.upsertShifts(shifts)
-//    }
+    override suspend fun saveShiftsForMonth(monthPrefix: String, shifts: List<ShiftEntity>) {
+        shiftDao.deleteShiftsForMonth(monthPrefix)
+        shiftDao.upsertShifts(shifts)
+    }
 //
 //    /**
 //     * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
 //     */
-//    override suspend fun deleteShiftsForMonth(monthPrefix: String) {
-//        shiftDao.deleteShiftsForMonth(monthPrefix)
-//    }
+    override suspend fun deleteShiftsForMonth(monthPrefix: String) {
+        shiftDao.deleteShiftsForMonth(monthPrefix)
+    }
 }
