@@ -10,7 +10,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import com.jacobdgraham.myschedule.ui.components.MonthSelectorDialog
-import com.jacobdgraham.myschedule.ui.preview.createFakeMonthSchedule
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
 import com.jacobdgraham.myschedule.viewmodel.CalendarViewModel
 import java.time.YearMonth
@@ -79,35 +78,6 @@ fun CalendarRoute(viewModel: CalendarViewModel) {
         }
     )
 }
-/**
- * Temporary test version for the calendar screen before Firebase and Room are functional. For a given month that is selected, random data is populated
- *
- * This is useful before the real ViewModel, Room database, or Firestore data
- * source is connected
- */
-@Composable
-fun TestCalendarScreen() {
-    var selectedMonth by remember {
-        mutableStateOf(YearMonth.of(2026,6))
-    }
-
-    val fakeSchedule = remember(selectedMonth) {
-        createFakeMonthSchedule(selectedMonth)
-    }
-
-    CalendarScreen(
-        uiState = CalendarUiState(
-            selectedMonth = selectedMonth,
-            monthSchedule = fakeSchedule,
-            isLoading = false,
-            errorMessage = null
-        ),
-        onMonthSelected = { newMonth ->
-            selectedMonth = newMonth
-        }
-    )
-}
-
 
 /**
  * Helper function to format the calendar title in the header of the screen to look user friendly
