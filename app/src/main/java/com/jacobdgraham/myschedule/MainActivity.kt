@@ -7,13 +7,30 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.firestore.FirebaseFirestore
+import com.jacobdgraham.myschedule.data.remote.FirestoreShiftDataSource
+import com.jacobdgraham.myschedule.data.repository.ShiftRepository
+import com.jacobdgraham.myschedule.ui.screen.CalendarRoute
 import com.jacobdgraham.myschedule.ui.screen.CalendarScreen
 import com.jacobdgraham.myschedule.ui.screen.TestCalendarScreen
 import com.jacobdgraham.myschedule.ui.theme.MyScheduleTheme
+import com.jacobdgraham.myschedule.viewmodel.CalendarViewModel
+import com.jacobdgraham.myschedule.viewmodel.CalendarViewModelFactory
 
 class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val firestore = FirebaseFirestore.getInstance()
+
+        val firestoreShiftDataSource = FirestoreShiftDataSource(firestore = firestore)
+
+        val shiftRepository = ShiftRepository(firestoreShiftDataSource = firestoreShiftDataSource)
+
+        val calendarViewModelFactory = CalendarViewModelFactory(
+            shiftRepository = shiftRepository
+        )
 
         setContent {
             MyScheduleTheme {
@@ -21,7 +38,10 @@ class MainActivity: ComponentActivity() {
                     modifier = Modifier.fillMaxWidth(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TestCalendarScreen()
+                    val calenderViewModel: CalendarViewModel = viewModel(factory = calendarViewModelFactory)
+                    CalendarRoute(
+                        viewModel = calenderViewModel
+                    )
                 }
             }
         }

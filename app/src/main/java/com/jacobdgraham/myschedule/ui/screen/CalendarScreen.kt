@@ -2,6 +2,7 @@ package com.jacobdgraham.myschedule.ui.screen
 
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -11,6 +12,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.jacobdgraham.myschedule.ui.components.MonthSelectorDialog
 import com.jacobdgraham.myschedule.ui.preview.createFakeMonthSchedule
 import com.jacobdgraham.myschedule.ui.state.CalendarUiState
+import com.jacobdgraham.myschedule.viewmodel.CalendarViewModel
 import java.time.YearMonth
 
 /**
@@ -66,6 +68,17 @@ fun CalendarScreen(uiState: CalendarUiState, onMonthSelected: (YearMonth) -> Uni
     }
 }
 
+@Composable
+fun CalendarRoute(viewModel: CalendarViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    CalendarScreen(
+        uiState = uiState,
+        onMonthSelected = { selectedMonth ->
+            viewModel.loadMonth(selectedMonth)
+        }
+    )
+}
 /**
  * Temporary test version for the calendar screen before Firebase and Room are functional. For a given month that is selected, random data is populated
  *

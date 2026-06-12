@@ -61,6 +61,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
 
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)

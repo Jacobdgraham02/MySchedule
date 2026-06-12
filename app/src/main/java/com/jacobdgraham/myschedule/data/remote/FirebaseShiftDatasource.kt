@@ -1,39 +1,40 @@
 package com.jacobdgraham.myschedule.data.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.jacobdgraham.myschedule.data.local.ShiftEntity
 import kotlinx.coroutines.tasks.await
+import java.time.YearMonth
 
 /**
- * This class assumes Firestore data structure is the following:
- * ```
- * schedules/
- *  2026-05
- *      year: 2026
- *      month: 5
- *      days:
- *          1: "2010"
- *          2: "2010"
- *          3: "1510"
- *          4: "0610"
- * ```
- * @param firestore the connection to the firebase data source
+ * Remote data source responsible for loading shifts from Firestore.
+ *
  */
-class FirebaseShiftDatasource(private val firestore: FirebaseFirestore) {
-
-    /**
-     * @param year integer representation of year, where the year must be 4 digits or longer
-     * @param month integer representation of month, where the month must be 2 digits or longer
-     * @return if valid data from firebase, create a valid [ShiftDto] object and return it. Else, null
-     */
-    suspend fun getMonthSchedule(year: Int, month: Int): ShiftDto? {
-        val documentId = "%04d-%02d".format(year, month)
+class FirestoreShiftDataSource(
+    private val firestore: FirebaseFirestore
+) {
+    suspend fun getShiftsForMonth(yearMonth: YearMonth): List<ShiftEntity> {
+        val startDate = yearMonth.atDay(1).toString()
+        val endDateExclusive = yearMonth.plusMonths(1).atDay(1).toString()
 
         val snapshot = firestore
-            .collection("schedules")
-            .document(documentId)
+            .collection("shifts")
+            .whereGreaterThanOrEqualTo("date", startDate)
+            .whereLessThan("date", endDateExclusive)
             .get()
             .await()
 
-        return snapshot.toObject(ShiftDto::class.java)
+        return snapshot.documents.mapNotNull { document ->
+            val date = document.getString("date")
+            val shiftCode = document.getString("shiftCode")
+
+            if (date != null && shiftCode != null) {
+                ShiftEntity(
+                    date = date,
+                    shiftCode = shiftCode
+                )
+            } else {
+                null
+            }
+        }
     }
 }
