@@ -1,6 +1,7 @@
 package com.jacobdgraham.myschedule.ui.state
 
 import com.jacobdgraham.myschedule.domain.model.MonthSchedule
+import com.jacobdgraham.myschedule.domain.model.ShiftDefinition
 import java.time.YearMonth
 
 /**
@@ -14,4 +15,5 @@ import java.time.YearMonth
  * @property errorMessage an optional error message to display if for some reason loading data fails
  */
 data class CalendarUiState (val selectedMonth: YearMonth = YearMonth.now(), val monthSchedule: MonthSchedule? = null,
+                            val shiftDefinitions: List<ShiftDefinition> = emptyList(),
                             val isLoading: Boolean = false, val errorMessage: String? = null)

@@ -23,18 +23,19 @@ class MainActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val database = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "myschedule_database"
-        ).build()
+                applicationContext,
+                AppDatabase::class.java,
+                "myschedule_database"
+            ).build()
 
         val shiftDao = database.shiftDao()
+        val shiftDefinitionDao = database.shiftDefinitions()
 
         val firestore = FirebaseFirestore.getInstance()
 
         val firestoreShiftDataSource = FirestoreShiftDataSource(firestore = firestore)
 
-        val shiftRepository = ShiftRepository(shiftDao = shiftDao, firestoreShiftDataSource = firestoreShiftDataSource)
+        val shiftRepository = ShiftRepository(shiftDao = shiftDao, shiftDefinitionDao = shiftDefinitionDao, firestoreShiftDataSource = firestoreShiftDataSource)
 
         val calendarViewModelFactory = CalendarViewModelFactory(
             shiftRepository = shiftRepository

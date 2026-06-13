@@ -2,10 +2,16 @@ package com.jacobdgraham.myschedule.data.repository
 
 import android.util.Log
 import com.jacobdgraham.myschedule.data.local.IShiftDao
+import com.jacobdgraham.myschedule.data.local.IShiftDefinitionDao
 import com.jacobdgraham.myschedule.data.local.ShiftEntity
 import com.jacobdgraham.myschedule.data.remote.FirestoreShiftDataSource
 import com.jacobdgraham.myschedule.data.repository.interfaces.IShiftRepository
+import com.jacobdgraham.myschedule.domain.model.ShiftDefinition
 import java.time.YearMonth
+import com.jacobdgraham.myschedule.data.local.toDomain
+import com.jacobdgraham.myschedule.data.local.toEntity
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 
 /**
  * Provides functions that translate data retrieved from firebase into usable [ShiftEntity] objects
@@ -16,7 +22,7 @@ import java.time.YearMonth
  *      ```
  *
  */
-class ShiftRepository(private val shiftDao: IShiftDao, private val firestoreShiftDataSource: FirestoreShiftDataSource): IShiftRepository {
+class ShiftRepository(private val shiftDao: IShiftDao, private val shiftDefinitionDao: IShiftDefinitionDao, val firestoreShiftDataSource: FirestoreShiftDataSource): IShiftRepository {
     private val logcatTag: String = "ShiftRepository"
     /**
      * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
@@ -27,19 +33,55 @@ class ShiftRepository(private val shiftDao: IShiftDao, private val firestoreShif
 
         val cachedShifts = shiftDao.getShiftsForMonth(monthPrefix)
 
-        return try {
-            val remoteShifts =  firestoreShiftDataSource.getShiftsForMonth(yearMonth)
+        val remoteShifts = withTimeoutOrNull(2_000L) {
+            try {
+                firestoreShiftDataSource.getShiftsForMonth(yearMonth)
+            }  catch (exception: Exception) {
+                Log.e(
+                    logcatTag,
+                    "Failed to refresh shifts from Firestore for $yearMonth, using cached Room data",
+                    exception
+                )
+                null
+            }
+        }
+
+        return if (remoteShifts != null) {
             shiftDao.deleteShiftsForMonth(monthPrefix)
             shiftDao.upsertShifts(remoteShifts)
-
             remoteShifts
-        } catch (exception: Exception) {
-            Log.e(
-                logcatTag,
-                "Failed to refresh shifts from Firestore for $yearMonth, using cached Room data",
-                exception
-            )
+        } else {
             cachedShifts
+        }
+    }
+
+    override suspend fun getShiftDefinitionsForMonth(shiftCodes: List<String>): List<ShiftDefinition> {
+        if (shiftCodes.isEmpty()) {
+            return emptyList()
+        }
+
+        val cachedDefinitions = shiftDefinitionDao
+            .getShiftDefinitionsForCodes(shiftCodes)
+            .map { it.toDomain() }
+
+        val remoteDefinitions = withTimeoutOrNull(2_000L) {
+            try {
+                firestoreShiftDataSource.getShiftDefinitionsForMonth(shiftCodes)
+            } catch (exception: Exception) {
+                Log.e(
+                    logcatTag,
+                    "Failed to refresh shift definitions from Firestore, using cached Room data",
+                    exception
+                )
+                null
+            }
+        }
+
+        return if (remoteDefinitions != null) {
+            shiftDefinitionDao.upsertShiftDefinitions(remoteDefinitions.map { it.toEntity() })
+            remoteDefinitions
+        }  else {
+            cachedDefinitions
         }
     }
 

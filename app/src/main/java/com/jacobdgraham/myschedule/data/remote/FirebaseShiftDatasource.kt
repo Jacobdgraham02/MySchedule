@@ -2,6 +2,7 @@ package com.jacobdgraham.myschedule.data.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jacobdgraham.myschedule.data.local.ShiftEntity
+import com.jacobdgraham.myschedule.domain.model.ShiftDefinition
 import kotlinx.coroutines.tasks.await
 import java.time.YearMonth
 
@@ -31,6 +32,31 @@ class FirestoreShiftDataSource(
                 ShiftEntity(
                     date = date,
                     shiftCode = shiftCode
+                )
+            } else {
+                null
+            }
+        }
+    }
+
+    suspend fun getShiftDefinitionsForMonth(
+        shiftCodes: List<String>
+    ): List<ShiftDefinition> {
+        if (shiftCodes.isEmpty()) {
+            return emptyList()
+        }
+
+        return shiftCodes.mapNotNull { code ->
+            val document = firestore
+                .collection("shiftDefinitions")
+                .document(code)
+                .get()
+                .await()
+
+            if (document.exists()) {
+                ShiftDefinition(
+                    code = document.getString("code") ?: code,
+                    definition = document.getString("definition") ?: ""
                 )
             } else {
                 null

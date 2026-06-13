@@ -40,6 +40,7 @@ fun PortraitCalendarLayout(
         Spacer(modifier = Modifier.height(40.dp))
 
         ShiftLegend(
+            shiftDefinitions = uiState.shiftDefinitions,
             modifier = Modifier.fillMaxWidth()
         )
 

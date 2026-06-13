@@ -2,6 +2,7 @@ package com.jacobdgraham.myschedule.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import com.jacobdgraham.myschedule.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.jacobdgraham.myschedule.domain.model.ShiftDefinition
 import com.jacobdgraham.myschedule.ui.theme.getShiftCodeColour
 
 /**
@@ -34,22 +36,38 @@ import com.jacobdgraham.myschedule.ui.theme.getShiftCodeColour
  * @param modifier optional modifier for styling and layout
  */
 @Composable
-fun ShiftLegend(modifier: Modifier = Modifier) {
+fun ShiftLegend(shiftDefinitions: List<ShiftDefinition>, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 1.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Text(
             text = stringResource(R.string.shift_legend_title),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
-        LegendItem(shiftCode = stringResource(R.string.shift_code_0610), description = stringResource(R.string.shift_code_0610_description))
 
-        LegendItem(shiftCode = stringResource(R.string.shift_code_1510), description = stringResource(R.string.shift_code_1510_description))
-
-        LegendItem(shiftCode = stringResource(R.string.shift_code_2010), description= stringResource(R.string.shift_code_2010_description))
+        FlowRow(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            shiftDefinitions.forEach { shiftDefinition ->
+                LegendItem(
+                    shiftCode = shiftDefinition.code,
+                    description = shiftDefinition.definition
+                )
+            }
+        }
+//        LegendItem(shiftCode = stringResource(R.string.shift_code_0610), description = stringResource(R.string.shift_code_0610_description))
+//
+//        LegendItem(shiftCode = stringResource(R.string.shift_code_1510), description = stringResource(R.string.shift_code_1510_description))
+//
+//        LegendItem(shiftCode = stringResource(R.string.shift_code_2010), description= stringResource(R.string.shift_code_2010_description))
     }
 }
 

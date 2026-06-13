@@ -57,15 +57,23 @@ class CalendarViewModel(private val shiftRepository: ShiftRepository): ViewModel
                     )
                 }
 
+                val usedShiftCodes = shiftEntities
+                    .map {it.shiftCode}
+                    .distinct()
+                    .sorted()
+
                 val monthSchedule = MonthSchedule(
                     year = yearMonth.year,
                     month = yearMonth.monthValue,
                     days = days
                 )
 
+                val shiftDefinitions = shiftRepository.getShiftDefinitionsForMonth(usedShiftCodes)
+
                 _uiState.value = CalendarUiState(
                     selectedMonth = yearMonth,
                     monthSchedule = monthSchedule,
+                    shiftDefinitions = shiftDefinitions,
                     isLoading = false,
                     errorMessage = null
                 )
@@ -77,6 +85,7 @@ class CalendarViewModel(private val shiftRepository: ShiftRepository): ViewModel
                 )
                 _uiState.value = _uiState.value.copy(
                     selectedMonth = yearMonth,
+                    shiftDefinitions = emptyList(),
                     isLoading = false,
                     errorMessage = "Could not load schedule for this month"
                 )
