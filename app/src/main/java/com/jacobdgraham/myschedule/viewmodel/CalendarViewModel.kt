@@ -13,6 +13,26 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.YearMonth
 
+/**
+ * [CalendarViewModel] updates current [CalendarUiState] to display current data on the main application window calendar.
+ * Below are the things this class is responsible for:
+ * ```
+ * 1. Loading the selected month shift data either from firebase or local Room database
+ * 2. Converting that stored shift entity data into calendar days
+ * 3. Loading the converted shift definitions used in that month
+ * ```
+ *
+ * Data flow:
+ * ```
+ * 1. User selects month to load data from the ui
+ * 2. CalendarViewModel asks ShiftRepository for the data containing shifts in this month
+ * 3. CalendarViewModel extracts shift codes from that data used in the selected month
+ * 4. CalendarViewModel asks ShiftRepository for the matching shift definitions for that particular shift
+ * 5. CalendarUiState is updated so the calendar grid and shift legend updated to contain data only relevant for that month
+ * ```
+ *
+ * @property shiftRepository repository that is used to load cached (Room) and/or remote (Firestore) schedule data
+ */
 class CalendarViewModel(private val shiftRepository: ShiftRepository): ViewModel() {
 
     private val logcatTag: String = "CalendarViewModel"
@@ -33,6 +53,16 @@ class CalendarViewModel(private val shiftRepository: ShiftRepository): ViewModel
     }
 
 
+    /**
+     * Loads schedule data for [yearMonth] and updates [uiState]
+     *
+     * Builds a full [MonthSchedule] containing every day in the selected month. All days are accounted for, but if they were not worked, no value is
+     * inserted into the cell, and is null
+     *
+     * Shift legend is generated dynamically by looking at the shift codes used in that month, and loads only definitions for those shift codes
+     *
+     * @param yearMonth the month to load
+     */
     fun loadMonth(yearMonth: YearMonth) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(

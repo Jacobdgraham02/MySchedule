@@ -9,6 +9,18 @@ import androidx.compose.ui.text.style.TextDecoration
 import com.jacobdgraham.myschedule.ui.screen.formatMonthTitle
 import java.time.YearMonth
 
+/**
+ * Displays the currently selected month as a clickable title
+ *
+ * The title is shown above the calendar grid and opens the month and year dialog selected [MonthSelectorDialog] when clicked
+ *
+ * Example display:
+ * ```
+ * June 2026
+ * ```
+ * @param selectedMonth year and month that is displayed on the dialog
+ * @param onClick callback function called when the user taps the month title
+ */
 @Composable
 fun MonthTitle(
     selectedMonth: YearMonth,
