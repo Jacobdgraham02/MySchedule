@@ -8,7 +8,7 @@
     <string name="shift_code_1510_description">3:00 p.m. to 1:00 a.m.</string>
     <string name="shift_code_2010_description">8:00 p.m. to 6:00 a.m.</string>
     <string name="no_schedule_availability">No schedule availability for this month</string>
-    <string name="month_selector_dialog_choose_month_prompt">Select month</string>
+    <string name="month_selector_dialog_choose_month_prompt">Select year and month</string>
     <string name="month_selector_dialog_select">Select</string>
     <string name="month_selector_dialog_cancel">Cancel</string>
 
