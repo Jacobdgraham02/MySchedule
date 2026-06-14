@@ -54,6 +54,7 @@ fun LandscapeCalendarLayout(
 
             ShiftLegend(
                 shiftDefinitions = uiState.shiftDefinitions,
+                hasAttemptedLoad = uiState.hasAttemptedLoad,
                 modifier = Modifier.fillMaxWidth()
             )
 

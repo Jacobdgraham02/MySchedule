@@ -11,6 +11,7 @@
     <string name="month_selector_dialog_choose_month_prompt">Select year and month</string>
     <string name="month_selector_dialog_select">Select</string>
     <string name="month_selector_dialog_cancel">Cancel</string>
+    <string name="no_shift_data_for_month">No shift data for this month</string>
 
     <string-array name="weekday_short_names">
         <item>Sun</item>

@@ -10,8 +10,8 @@ import com.jacobdgraham.myschedule.domain.model.ShiftDefinition
 import java.time.YearMonth
 import com.jacobdgraham.myschedule.data.local.toDomain
 import com.jacobdgraham.myschedule.data.local.toEntity
-import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Provides functions that translate data retrieved from firebase into usable [ShiftEntity] objects
@@ -25,7 +25,7 @@ import kotlinx.coroutines.withTimeoutOrNull
 class ShiftRepository(private val shiftDao: IShiftDao, private val shiftDefinitionDao: IShiftDefinitionDao, val firestoreShiftDataSource: FirestoreShiftDataSource): IShiftRepository {
     private val logcatTag: String = "ShiftRepository"
     /**
-     * @param monthPrefix the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
+     * @param yearMonth the string month prefix with the year and month, in the following format: xxxx-xx. For example, 2026-05
      * @return List of [ShiftEntity], where each entity shows the current shift for that day and the shift worked that day
      */
     override suspend fun getShiftsForMonth(yearMonth: YearMonth): List<ShiftEntity> {
@@ -33,7 +33,7 @@ class ShiftRepository(private val shiftDao: IShiftDao, private val shiftDefiniti
 
         val cachedShifts = shiftDao.getShiftsForMonth(monthPrefix)
 
-        val remoteShifts = withTimeoutOrNull(2_000L) {
+        val remoteShifts = withTimeoutOrNull(2_000L.milliseconds) {
             try {
                 firestoreShiftDataSource.getShiftsForMonth(yearMonth)
             }  catch (exception: Exception) {
@@ -64,7 +64,7 @@ class ShiftRepository(private val shiftDao: IShiftDao, private val shiftDefiniti
             .getShiftDefinitionsForCodes(shiftCodes)
             .map { it.toDomain() }
 
-        val remoteDefinitions = withTimeoutOrNull(2_000L) {
+        val remoteDefinitions = withTimeoutOrNull(2_000L.milliseconds) {
             try {
                 firestoreShiftDataSource.getShiftDefinitionsForMonth(shiftCodes)
             } catch (exception: Exception) {

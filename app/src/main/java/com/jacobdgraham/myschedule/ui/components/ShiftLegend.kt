@@ -36,7 +36,7 @@ import com.jacobdgraham.myschedule.ui.theme.getShiftCodeColour
  * @param modifier optional modifier for styling and layout
  */
 @Composable
-fun ShiftLegend(shiftDefinitions: List<ShiftDefinition>, modifier: Modifier = Modifier) {
+fun ShiftLegend(shiftDefinitions: List<ShiftDefinition>, hasAttemptedLoad: Boolean, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 1.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -49,25 +49,35 @@ fun ShiftLegend(shiftDefinitions: List<ShiftDefinition>, modifier: Modifier = Mo
             fontWeight = FontWeight.Bold
         )
 
-        FlowRow(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            shiftDefinitions.forEach { shiftDefinition ->
-                LegendItem(
-                    shiftCode = shiftDefinition.code,
-                    description = shiftDefinition.definition
-                )
+//        if (shiftDefinitions.isEmpty()) {
+//            Text(
+//                text = stringResource(R.string.no_shift_data_for_month),
+//                style = MaterialTheme.typography.bodyMedium,
+//                color = MaterialTheme.colorScheme.error
+//            )
+//        }
+        if (hasAttemptedLoad && shiftDefinitions.isEmpty()) {
+            Text(
+                text = stringResource(R.string.no_shift_data_for_month),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.error
+            )
+        } else {
+            FlowRow(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                shiftDefinitions.forEach { shiftDefinition ->
+                    LegendItem(
+                        shiftCode = shiftDefinition.code,
+                        description = shiftDefinition.definition
+                    )
+                }
             }
         }
-//        LegendItem(shiftCode = stringResource(R.string.shift_code_0610), description = stringResource(R.string.shift_code_0610_description))
-//
-//        LegendItem(shiftCode = stringResource(R.string.shift_code_1510), description = stringResource(R.string.shift_code_1510_description))
-//
-//        LegendItem(shiftCode = stringResource(R.string.shift_code_2010), description= stringResource(R.string.shift_code_2010_description))
     }
 }
 

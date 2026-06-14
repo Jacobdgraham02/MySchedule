@@ -68,6 +68,7 @@ class CalendarViewModel(private val shiftRepository: ShiftRepository): ViewModel
             _uiState.value = _uiState.value.copy(
                 selectedMonth = yearMonth,
                 isLoading = true,
+                hasAttemptedLoad = false,
                 errorMessage = null
             )
 
@@ -105,6 +106,7 @@ class CalendarViewModel(private val shiftRepository: ShiftRepository): ViewModel
                     monthSchedule = monthSchedule,
                     shiftDefinitions = shiftDefinitions,
                     isLoading = false,
+                    hasAttemptedLoad = true,
                     errorMessage = null
                 )
             } catch (exception: Exception) {
@@ -117,6 +119,7 @@ class CalendarViewModel(private val shiftRepository: ShiftRepository): ViewModel
                     selectedMonth = yearMonth,
                     shiftDefinitions = emptyList(),
                     isLoading = false,
+                    hasAttemptedLoad = true,
                     errorMessage = "Could not load schedule for this month"
                 )
             }
