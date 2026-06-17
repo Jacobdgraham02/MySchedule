@@ -115,8 +115,8 @@
     <h3 id="credits">Credits</h3>
     <article>
         <p>
-            App images were obtained from: 
-            <a href="https://thepayrolledge.com/blog/2019-provincial-holiday-schedule-in-canada/">Here</a>.
+            App images were obtained from
+            <a href="https://thepayrolledge.com/blog/2019-provincial-holiday-schedule-in-canada/">here</a>.
             No modifications were made to the image.
         </p>
         <p>
