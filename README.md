@@ -56,19 +56,25 @@
     <article>
         <p>
             Below is a collection of sceenshots showing my application:
-            Portrait mode of calendar
-            <img src="images/PortraitMainApplicationScreen.jpg" alt="Portrait calendar screen"/>   
-            Portrait mode of calendar
+            ###Portrait mode of calendar
+            <img src="images/PortraitMainApplicationScreen.jpg" alt="Portrait calendar screen"/>
+            <a href="#readme-top">Back to top</a>
+            <h4>Portrait mode of calendar</h4>
             <img src="images/PortraitMainApplicationScreen2.jpg" alt="Portrait calendar screen 2"/>
-            Portrait mode of calendar dialog picker for month and year
+            <a href="#readme-top">Back to top</a>
+            <h4>Portrait mode of calendar dialog picker for month and year</h4>
             <img src="images/PortraitMainApplicationScreenDialogPicker.jpg" alt="Portrait calendar dialog picker"/>
-            Portrait mode of calendar with no shift data
+            <a href="#readme-top">Back to top</a>
+            <h4>Portrait mode of calendar with no shift data</h4>
             <img src="images/PortraitMainApplicationScreenNoShiftData.jpg" alt="Portrait calendar screen no shift data"/>
-            Landscape mode of calendar
+            <a href="#readme-top">Back to top</a>
+            <h4>Landscape mode of calendar</h4>
             <img src="images/LandscapeMainApplicationScreen.jpg" alt="Landscape calendar screen"/>
-            Landscape mode of calendar
+            <a href="#readme-top">Back to top</a>
+            <h4>Landscape mode of calendar</h4>
             <img src="images/LandscapeMainApplicationScreen2.jpg" alt="Landscape calendar screen 2"/>
-            Landscape mode of calendar dialog picker for month and year
+            <a href="#readme-top">Back to top</a>
+            <h4>Landscape mode of calendar dialog picker for month and year</h4>
             <img src="images/LandscapeMainApplicationScreenDialogPicker.jpg" alt="Landscape calendar screen dialog picker"/>
         </p>
         <p>
