@@ -9,6 +9,7 @@
             <li><a href="#about" title="About this application and why I created it">About</a></li>
             <li><a href="#features" title="A list of features included in this application">Features</a></li>
             <li><a href="#screenshots" title="A list of screenshots for both portrait and landscape mode">Screenshots</a></li>
+            <li><a href="#used" title="Things used in this application">Used</a></li>
             <li><a href="#credits" title="Credits to give to assets that I used">Credits</a></li>
         </ol>
     </article>
@@ -56,7 +57,6 @@
     <article>
         <p>
             Below is a collection of sceenshots showing my application:
-            ###Portrait mode of calendar
             <img src="images/PortraitMainApplicationScreen.jpg" alt="Portrait calendar screen"/>
             <a href="#readme-top">Back to top</a>
             <h4>Portrait mode of calendar</h4>
@@ -80,6 +80,18 @@
         <p>
             <a href="#readme-top">Back to top</a>
         </p>
+    </article>
+</section>
+
+<section>
+    <!-- THINGS USED SECTION -->
+    <h3 id="used">Used</h3>
+    <article>
+        <ul>
+            <a href="https://kotlinlang.org/" title="A link that goes to official Kotlin website">Kotlin</a>
+            <a href="https://developer.android.com/develop/ui" title="A link that goes to Google Compose official documentation">Compose</a>
+            <a href="https://developer.android.com/training/data-storage/room" title="A link that goes to Google Room official documentation">Room</a>
+        </ul>
     </article>
 </section>
 
