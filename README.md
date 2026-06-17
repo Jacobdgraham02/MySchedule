@@ -1,6 +1,5 @@
 <a id="readme-top"></a>
-<!-- TABLE OF CONTENTS --> 
-<h1>Readme to do at a later date</h1>
+<!-- TABLE OF CONTENTS -->
 
 <section>
     <h1>Table of Contents</h1>
