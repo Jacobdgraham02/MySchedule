@@ -55,28 +55,43 @@
     <!-- SCREENSHOTS SECTION -->
     <h3 id="screenshots">Screenshots</h3>
     <article>
-        <p>
-            Below is a collection of sceenshots showing my application:
-            <img src="images/PortraitMainApplicationScreen.jpg" alt="Portrait calendar screen"/>
-            <a href="#readme-top">Back to top</a>
-            <h4>Portrait mode of calendar</h4>
-            <img src="images/PortraitMainApplicationScreen2.jpg" alt="Portrait calendar screen 2"/>
-            <a href="#readme-top">Back to top</a>
-            <h4>Portrait mode of calendar dialog picker for month and year</h4>
-            <img src="images/PortraitMainApplicationScreenDialogPicker.jpg" alt="Portrait calendar dialog picker"/>
-            <a href="#readme-top">Back to top</a>
-            <h4>Portrait mode of calendar with no shift data</h4>
-            <img src="images/PortraitMainApplicationScreenNoShiftData.jpg" alt="Portrait calendar screen no shift data"/>
-            <a href="#readme-top">Back to top</a>
-            <h4>Landscape mode of calendar</h4>
-            <img src="images/LandscapeMainApplicationScreen.jpg" alt="Landscape calendar screen"/>
-            <a href="#readme-top">Back to top</a>
-            <h4>Landscape mode of calendar</h4>
-            <img src="images/LandscapeMainApplicationScreen2.jpg" alt="Landscape calendar screen 2"/>
-            <a href="#readme-top">Back to top</a>
-            <h4>Landscape mode of calendar dialog picker for month and year</h4>
-            <img src="images/LandscapeMainApplicationScreenDialogPicker.jpg" alt="Landscape calendar screen dialog picker"/>
-        </p>
+        <p>Below is a collection of sceenshots showing my application:</p>
+            <ul>
+                <li>
+                    <h4>Portrait mode of calendar</h4>
+                    <img src="images/PortraitMainApplicationScreen.jpg" alt="Portrait calendar screen"/>
+                    <a href="#readme-top">Back to top</a>
+                </li>
+                <li>
+                    <h4>Portrait mode of calendar</h4>
+                    <img src="images/PortraitMainApplicationScreen2.jpg" alt="Portrait calendar screen 2"/>
+                    <a href="#readme-top">Back to top</a>
+                </li>
+                <li>
+                    <h4>Portrait mode of calendar dialog picker for month and year</h4>
+                    <img src="images/PortraitMainApplicationScreenDialogPicker.jpg" alt="Portrait calendar dialog picker"/>
+                    <a href="#readme-top">Back to top</a>
+                </li>
+                <li>
+                    <h4>Portrait mode of calendar with no shift data</h4>
+                    <img src="images/PortraitMainApplicationScreenNoShiftData.jpg" alt="Portrait calendar screen no shift data"/>
+                    <a href="#readme-top">Back to top</a>
+                </li>
+                <li>            
+                    <h4>Landscape mode of calendar</h4>
+                    <img src="images/LandscapeMainApplicationScreen.jpg" alt="Landscape calendar screen"/>
+                    <a href="#readme-top">Back to top</a>
+                </li>
+                <li>            
+                    <h4>Landscape mode of calendar</h4>
+                    <img src="images/LandscapeMainApplicationScreen2.jpg" alt="Landscape calendar screen 2"/>
+                    <a href="#readme-top">Back to top</a>
+                </li>
+                <li>
+                    <h4>Landscape mode of calendar dialog picker for month and year</h4>
+                    <img src="images/LandscapeMainApplicationScreenDialogPicker.jpg" alt="Landscape calendar screen dialog picker"/>
+                </li>
+            </ul>
         <p>
             <a href="#readme-top">Back to top</a>
         </p>
@@ -88,9 +103,9 @@
     <h3 id="used">Used</h3>
     <article>
         <ul>
-            <a href="https://kotlinlang.org/" title="A link that goes to official Kotlin website">Kotlin</a>
-            <a href="https://developer.android.com/develop/ui" title="A link that goes to Google Compose official documentation">Compose</a>
-            <a href="https://developer.android.com/training/data-storage/room" title="A link that goes to Google Room official documentation">Room</a>
+            <li><a href="https://kotlinlang.org/" title="A link that goes to official Kotlin website">Kotlin</a></li>
+            <li><a href="https://developer.android.com/develop/ui" title="A link that goes to Google Compose official documentation">Compose</a></li>
+            <li><a href="https://developer.android.com/training/data-storage/room" title="A link that goes to Google Room official documentation">Room</a></li>
         </ul>
     </article>
 </section>
